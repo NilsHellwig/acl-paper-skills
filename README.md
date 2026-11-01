@@ -1,6 +1,8 @@
 <div align="center">
 
-# 📝 acl-paper-skills
+<img src="assets/icon.png" alt="acl-paper-skills icon" width="128">
+
+# acl-paper-skills
 
 **Claude Code skills that check your ACL paper before reviewers do.**
 
@@ -12,6 +14,10 @@ Proofreading reports · citations verified against full text · ACL Anthology & 
 [![Claude Code plugin](https://img.shields.io/badge/Claude%20Code-plugin-d97757)](https://docs.claude.com/en/docs/claude-code/plugins)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776ab)](pyproject.toml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
+<br>
+
+<img src="assets/banner.jpg" alt="The ACL mascot and Claude sitting side by side on a rooftop at sunset" width="100%">
 
 </div>
 
