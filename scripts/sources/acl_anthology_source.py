@@ -18,7 +18,7 @@ REQUIRES = ["acl-anthology", "typing_extensions"]
 DATA_DIR = Path(
     os.environ.get("ACL_PAPER_ANTHOLOGY_DIR", Path.home() / ".cache" / "acl-paper" / "anthology")
 )
-USER_AGENT = "acl-paper-plugin (https://github.com/NilsHellwig/nlp-paper-assistant)"
+USER_AGENT = "acl-paper-plugin (https://github.com/NilsHellwig/acl-paper-skills)"
 
 _anthology = None
 

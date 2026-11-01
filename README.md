@@ -1,13 +1,13 @@
 <div align="center">
 
-# 📝 nlp-paper-assistant
+# 📝 acl-paper-skills
 
 **Claude Code skills that check your ACL paper before reviewers do.**
 
 Proofreading reports · citations verified against full text · ACL Anthology & arXiv literature · automatic bib sync · ARR guideline checks · simulated reviews · rebuttal & camera-ready help
 
-[![tests](https://github.com/NilsHellwig/nlp-paper-assistant/actions/workflows/test.yml/badge.svg)](https://github.com/NilsHellwig/nlp-paper-assistant/actions/workflows/test.yml)
-[![upstream](https://github.com/NilsHellwig/nlp-paper-assistant/actions/workflows/upstream.yml/badge.svg)](https://github.com/NilsHellwig/nlp-paper-assistant/actions/workflows/upstream.yml)
+[![tests](https://github.com/NilsHellwig/acl-paper-skills/actions/workflows/test.yml/badge.svg)](https://github.com/NilsHellwig/acl-paper-skills/actions/workflows/test.yml)
+[![upstream](https://github.com/NilsHellwig/acl-paper-skills/actions/workflows/upstream.yml/badge.svg)](https://github.com/NilsHellwig/acl-paper-skills/actions/workflows/upstream.yml)
 [![version](https://img.shields.io/badge/version-0.1.0-blue)](CHANGELOG.md)
 [![Claude Code plugin](https://img.shields.io/badge/Claude%20Code-plugin-d97757)](https://docs.claude.com/en/docs/claude-code/plugins)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776ab)](pyproject.toml)
@@ -35,8 +35,8 @@ Proofreading reports · citations verified against full text · ACL Anthology & 
 
 ```text
 # 1. In Claude Code, add the marketplace and install the plugin
-/plugin marketplace add NilsHellwig/nlp-paper-assistant
-/plugin install acl-paper@nlp-paper-assistant
+/plugin marketplace add NilsHellwig/acl-paper-skills
+/plugin install acl-paper@acl-paper-skills
 
 # 2. Open your paper folder (official ACL LaTeX template) and set it up
 /acl-paper:init

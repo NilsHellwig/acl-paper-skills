@@ -14,5 +14,5 @@ All notable changes to this project are documented here. The format follows [Kee
 - PostToolUse hook that keeps the paper bib equal to the cited keys after every `.tex` edit.
 - Tests, CI, weekly upstream drift check, issue and PR templates.
 
-[Unreleased]: https://github.com/NilsHellwig/nlp-paper-assistant/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/NilsHellwig/nlp-paper-assistant/releases/tag/v0.1.0
+[Unreleased]: https://github.com/NilsHellwig/acl-paper-skills/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/NilsHellwig/acl-paper-skills/releases/tag/v0.1.0

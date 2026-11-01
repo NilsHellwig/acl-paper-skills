@@ -14,7 +14,7 @@ from pathlib import Path
 NAME = "<source-name>"
 REQUIRES: list[str] = []  # pip names of third-party packages imported below
 
-USER_AGENT = "acl-paper-plugin (https://github.com/NilsHellwig/nlp-paper-assistant)"
+USER_AGENT = "acl-paper-plugin (https://github.com/NilsHellwig/acl-paper-skills)"
 
 
 def _get(url: str) -> bytes:

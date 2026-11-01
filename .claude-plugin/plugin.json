@@ -6,8 +6,8 @@
     "name": "Nils Hellwig",
     "url": "https://github.com/NilsHellwig"
   },
-  "homepage": "https://github.com/NilsHellwig/nlp-paper-assistant",
-  "repository": "https://github.com/NilsHellwig/nlp-paper-assistant",
+  "homepage": "https://github.com/NilsHellwig/acl-paper-skills",
+  "repository": "https://github.com/NilsHellwig/acl-paper-skills",
   "license": "MIT",
   "keywords": ["acl", "arr", "nlp", "paper", "latex", "bibtex", "proofreading", "academic-writing"]
 }

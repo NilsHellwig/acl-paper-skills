@@ -10,7 +10,7 @@ from pathlib import Path
 NAME = "arxiv"
 REQUIRES = ["arxiv"]
 
-USER_AGENT = "acl-paper-plugin (https://github.com/NilsHellwig/nlp-paper-assistant)"
+USER_AGENT = "acl-paper-plugin (https://github.com/NilsHellwig/acl-paper-skills)"
 _ID = re.compile(r"(\d{4}\.\d{4,5}|[a-z-]+(?:\.[A-Z]{2})?/\d{7})(v\d+)?")
 
 

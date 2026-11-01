@@ -12,8 +12,8 @@ Thanks for helping. Issues and pull requests are welcome; the issue forms ask fo
 ## Development
 
 ```bash
-git clone https://github.com/NilsHellwig/nlp-paper-assistant
-cd nlp-paper-assistant
+git clone https://github.com/NilsHellwig/acl-paper-skills
+cd acl-paper-skills
 uv venv && uv pip install -e ".[dev,sources]"   # or: python -m venv .venv && pip install -e ".[dev,sources]"
 pytest                 # offline suite
 pytest --network       # also checks upstream URLs and arXiv
@@ -22,8 +22,8 @@ pytest --network       # also checks upstream URLs and arXiv
 Try the plugin from your checkout in a real paper project:
 
 ```
-/plugin marketplace add /path/to/nlp-paper-assistant
-/plugin install acl-paper@nlp-paper-assistant
+/plugin marketplace add /path/to/acl-paper-skills
+/plugin install acl-paper@acl-paper-skills
 ```
 
 Skills are written for agents: read `CLAUDE.md` in this repo before editing one.

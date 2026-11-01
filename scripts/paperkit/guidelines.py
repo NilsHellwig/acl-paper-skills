@@ -10,7 +10,7 @@ from datetime import date
 from pathlib import Path
 
 SOURCES = Path(__file__).resolve().parent / "data" / "guideline_sources.json"
-USER_AGENT = "acl-paper-plugin (https://github.com/NilsHellwig/nlp-paper-assistant)"
+USER_AGENT = "acl-paper-plugin (https://github.com/NilsHellwig/acl-paper-skills)"
 
 
 def catalog() -> dict:
