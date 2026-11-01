@@ -1,0 +1,60 @@
+name: Bug report
+description: A skill or script did the wrong thing in a real session.
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: skill
+    attributes:
+      label: Skill or script
+      options:
+        - init
+        - writing
+        - literature
+        - acl-anthology
+        - arxiv
+        - new-source
+        - proofread
+        - guidelines-check
+        - reviewer
+        - rebuttal
+        - camera-ready
+        - bib sync hook
+        - paperkit.py (direct call)
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: "acl-paper plugin version, Claude Code version (`claude --version`), model."
+      placeholder: "acl-paper 0.1.0, Claude Code 2.x, Opus"
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      description: OS, Python version of the project env, how it was created (uv, conda, venv).
+      placeholder: "macOS 15, Python 3.12 (uv)"
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you ran and what happened. Paste the relevant part of the session or the command output.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+      description: What should have happened instead, and which line of the SKILL.md (if any) says so.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Minimal reproduction
+      description: A small .tex / .bib snippet or the steps that trigger it. Leave out unpublished paper content.

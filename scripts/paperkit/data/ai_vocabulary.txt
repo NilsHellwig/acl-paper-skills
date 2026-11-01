@@ -1,0 +1,53 @@
+# Words LLMs overuse in prose (Wikipedia: Signs of AI writing, "High density of
+# AI vocabulary words", plus the plugin's own academic-writing additions).
+# One lowercase word or phrase per line; matched as whole words, any inflection
+# listed explicitly. A hit is a prompt to check the sentence, not proof.
+additionally
+align with
+boasts
+bolster
+bolstered
+crucial
+delve
+delves
+delving
+emphasizing
+emphasising
+enduring
+enhance
+enhances
+fostering
+foster
+garner
+highlighting
+interplay
+intricate
+intricacies
+landscape
+leverage
+leverages
+leveraging
+meticulous
+meticulously
+multifaceted
+notably
+paramount
+pivotal
+plays a crucial role
+plays a key role
+plays a pivotal role
+realm
+seamless
+seamlessly
+showcase
+showcases
+showcasing
+tapestry
+testament
+underscore
+underscores
+underscoring
+unlock
+unlocks
+valuable insights
+vibrant

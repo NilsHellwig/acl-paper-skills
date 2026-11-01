@@ -1,0 +1,14 @@
+[project]
+name = "acl-paper"
+version = "0.1.0"
+description = "Scripts behind the acl-paper Claude Code plugin."
+requires-python = ">=3.10"
+license = "MIT"
+
+[project.optional-dependencies]
+sources = ["acl-anthology", "typing_extensions", "arxiv"]
+dev = ["pytest>=8"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["network: hits arXiv or GitHub (run with --network)"]

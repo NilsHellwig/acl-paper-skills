@@ -1,0 +1,40 @@
+name: New literature source
+description: Propose a source (beyond ACL Anthology and arXiv) as a built-in adapter.
+labels: ["source"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Any source can already be added per project with `/acl-paper:new-source`. Use this form when a source is useful enough to ship with the plugin; attach your project adapter if you built one.
+  - type: input
+    id: name
+    attributes:
+      label: Source
+      placeholder: "Semantic Scholar"
+    validations:
+      required: true
+  - type: textarea
+    id: api
+    attributes:
+      label: Search API
+      description: Endpoint or Python package, authentication, rate limits, terms of use.
+    validations:
+      required: true
+  - type: textarea
+    id: bibtex
+    attributes:
+      label: Authoritative BibTeX
+      description: Where the entry comes from (export endpoint, DOI content negotiation, DBLP). Sources whose BibTeX would have to be assembled from metadata cannot be built in.
+    validations:
+      required: true
+  - type: textarea
+    id: pdf
+    attributes:
+      label: PDF access
+      description: How the open-access PDF is fetched, and for which share of papers it exists.
+  - type: textarea
+    id: adapter
+    attributes:
+      label: Existing adapter
+      description: Paste or link your `.claude/skills/<name>-source/adapter.py` if you have one.
+      render: python

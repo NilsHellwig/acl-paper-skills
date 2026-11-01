@@ -1,0 +1,32 @@
+name: Skill or feature request
+description: Propose a new skill or a change to an existing one.
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The plugin is for checking papers the authors write themselves. Requests that turn it into a paper generator are out of scope.
+  - type: input
+    id: skill
+    attributes:
+      label: Existing skill (if any)
+      placeholder: "proofread, or 'new'"
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: Which step of writing, submitting or revising an ACL paper does this help with? What do you do today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: What the skill should do, its inputs and outputs (report.md items, a file, an edit).
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Upstream rules or data
+      description: Official documents the skill would rely on (ARR, ACL, ACLPUB pages). They are fetched at run time, never copied into this repo.

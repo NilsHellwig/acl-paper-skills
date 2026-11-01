@@ -1,0 +1,28 @@
+name: Guideline drift
+description: An ARR, ACL or ACLPUB document moved, was renamed, or a skill relies on a section that changed.
+labels: ["guideline-drift"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The skills fetch upstream documents listed in `scripts/paperkit/data/guideline_sources.json` on every run. The weekly CI job opens this kind of issue when a URL stops working.
+  - type: input
+    id: document
+    attributes:
+      label: Document id
+      description: Key in guideline_sources.json, or "new" for a document that should be added.
+      placeholder: arr-review-form
+    validations:
+      required: true
+  - type: input
+    id: new_url
+    attributes:
+      label: New location
+      description: Raw GitHub URL of the moved or new document.
+  - type: textarea
+    id: details
+    attributes:
+      label: What changed
+      description: E.g. a renamed section the rebuttal skill points to, a new checklist, a new file in the ARR repo.
+    validations:
+      required: true

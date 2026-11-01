@@ -1,0 +1,13 @@
+{
+  "name": "acl-paper",
+  "version": "0.1.0",
+  "description": "Quality control for ACL/ARR papers in Claude Code: proofreading reports, citation checks against the full text, ACL Anthology and arXiv literature, bib sync, ARR guideline checks, simulated reviews, rebuttal and camera-ready help.",
+  "author": {
+    "name": "Nils Hellwig",
+    "url": "https://github.com/NilsHellwig"
+  },
+  "homepage": "https://github.com/NilsHellwig/nlp-paper-assistant",
+  "repository": "https://github.com/NilsHellwig/nlp-paper-assistant",
+  "license": "MIT",
+  "keywords": ["acl", "arr", "nlp", "paper", "latex", "bibtex", "proofreading", "academic-writing"]
+}

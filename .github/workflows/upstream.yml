@@ -1,0 +1,33 @@
+name: upstream drift
+
+# Weekly: are the ARR / ACL / ACLPUB documents and the arXiv BibTeX endpoint still where the skills expect them?
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  network:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: pip install pytest arxiv
+      - id: tests
+        run: pytest -q --network tests/test_network.py
+        continue-on-error: true
+      - if: steps.tests.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue list --label guideline-drift --state open --json number --jq 'length' | grep -q '^0$' || exit 0
+          gh issue create --label guideline-drift \
+            --title "Upstream drift detected $(date +%F)" \
+            --body "The weekly network tests failed: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+      - if: steps.tests.outcome == 'failure'
+        run: exit 1

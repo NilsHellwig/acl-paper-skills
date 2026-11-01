@@ -1,0 +1,17 @@
+{
+  "description": "acl-paper: keep the paper bib in sync with \\cite keys after every .tex/.bib edit, and flag cited papers that were not read in full.",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/hook_bibsync.py\"",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
+}
