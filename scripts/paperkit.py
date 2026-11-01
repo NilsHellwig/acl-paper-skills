@@ -17,6 +17,9 @@ paper.config.json, where the adapter packages are installed.
     paperkit.py index
     paperkit.py check [FILE ...] [--json]
     paperkit.py guidelines NAME [NAME ...] [--out DIR]
+    paperkit.py revision-prepare PDF                 (previous version -> revision/previous.pdf + .txt)
+    paperkit.py revision-diff                        (previous.txt vs the current .tex files)
+    paperkit.py latex-check                          (compiler and the packages revision.tex needs)
     paperkit.py anthology-update
     paperkit.py test-source SOURCE QUERY ID          (adapter check, stores nothing)
 """
@@ -26,6 +29,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -35,7 +39,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
-from paperkit import bib, checks, config, guidelines, literature, sources, sync, tex  # noqa: E402
+from paperkit import bib, checks, config, guidelines, literature, revision, sources, sync, tex  # noqa: E402
 
 TEMPLATES = HERE.parent / "templates"
 ADAPTER_COMMANDS = {"search", "add", "anthology-update", "test-source"}
@@ -322,6 +326,69 @@ def cmd_guidelines(a) -> None:
         sys.exit(1)
 
 
+def cmd_revision_prepare(a) -> None:
+    root, _ = ctx()
+    src = Path(a.pdf).expanduser().resolve()
+    if not src.is_file() or not literature.is_pdf(src):
+        die(f"⚠️ {a.pdf} is not a PDF.")
+    if not literature.pdftotext_available():
+        die("⚠️ pdftotext is not installed (macOS: `brew install poppler`, "
+            "Debian/Ubuntu: `sudo apt install poppler-utils`).")
+    dest = root / "revision"
+    dest.mkdir(exist_ok=True)
+    if src != (dest / "previous.pdf").resolve():
+        shutil.copyfile(src, dest / "previous.pdf")
+    # Reading order, not -layout: two-column pages stay column by column.
+    subprocess.run(["pdftotext", str(dest / "previous.pdf"), str(dest / "previous.txt")], check=True)
+    print(f"✅ revision/previous.pdf and revision/previous.txt "
+          f"({len((dest / 'previous.txt').read_text(errors='replace').split())} words)")
+
+
+def cmd_revision_diff(a) -> None:
+    root, cfg = ctx()
+    old_txt = root / "revision" / "previous.txt"
+    if not old_txt.is_file():
+        die("⚠️ revision/previous.txt is missing. Run `revision-prepare PDF` first.")
+    main = root / cfg["main_tex"]
+    paras = revision.paragraphs(root, main)
+    if not paras:
+        die(f"⚠️ No body text found in {cfg['main_tex']}.")
+    items, unchanged = revision.compare(
+        revision.old_tokens(old_txt.read_text(encoding="utf-8", errors="replace")), paras)
+    print(revision.render(items, unchanged, cfg["main_tex"]))
+
+
+def cmd_latex_check(a) -> None:
+    template = TEMPLATES / "revision.tex"
+    ok = True
+
+    def line(good: bool, msg: str) -> None:
+        nonlocal ok
+        ok &= good
+        print(("✅ " if good else "⚠️ ") + msg)
+
+    compiler = next((c for c in ("latexmk", "pdflatex") if shutil.which(c)), None)
+    line(compiler is not None,
+         f"{compiler} found" if compiler else
+         "no LaTeX compiler (latexmk or pdflatex) on PATH (macOS: `brew install --cask mactex-no-gui` "
+         "or BasicTeX, Debian/Ubuntu: `sudo apt install texlive-latex-extra latexmk`)")
+    if compiler == "latexmk" and not shutil.which("pdflatex"):
+        line(False, "latexmk found but pdflatex is missing")
+    pkgs: list[str] = []
+    for m in re.finditer(r"\\(?:usepackage|RequirePackage)\s*(?:\[[^\]]*\])?\s*\{([^}]*)\}",
+                         template.read_text(encoding="utf-8")):
+        pkgs += [p.strip() for p in m.group(1).split(",") if p.strip()]
+    if not shutil.which("kpsewhich"):
+        line(False, "kpsewhich not found: cannot check the packages of revision.tex")
+    else:
+        missing = [p for p in pkgs if not subprocess.run(
+            ["kpsewhich", p + ".sty"], capture_output=True, text=True).stdout.strip()]
+        line(not missing, "packages for revision.tex: " + (
+            f"missing {', '.join(missing)} (install with `sudo tlmgr install {' '.join(missing)}`)"
+            if missing else "all found"))
+    sys.exit(0 if ok else 1)
+
+
 def cmd_test_source(a) -> None:
     """Exercise an adapter end to end without touching the library."""
     root, cfg = ctx()
@@ -389,6 +456,10 @@ def main(argv: list[str]) -> None:
     s = sub.add_parser("guidelines")
     s.add_argument("names", nargs="+")
     s.add_argument("--out")
+    s = sub.add_parser("revision-prepare")
+    s.add_argument("pdf")
+    sub.add_parser("revision-diff")
+    sub.add_parser("latex-check")
     sub.add_parser("anthology-update")
     s = sub.add_parser("test-source")
     s.add_argument("source")

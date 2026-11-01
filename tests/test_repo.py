@@ -5,7 +5,7 @@ import re
 
 from conftest import ROOT
 
-USER_INVOKED = {"init", "new-source", "proofread", "reviewer", "rebuttal", "camera-ready"}
+USER_INVOKED = {"init", "new-source", "proofread", "reviewer", "rebuttal", "revision", "camera-ready"}
 MODEL_INVOKED = {"writing", "literature", "acl-anthology", "arxiv", "guidelines-check"}
 
 
