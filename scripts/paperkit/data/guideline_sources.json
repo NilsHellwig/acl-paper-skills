@@ -15,6 +15,7 @@
     "guidelines-check": ["arr-cfp", "arr-author-checklist", "arr-responsible-nlp", "acl-formatting"],
     "reviewer": ["arr-review-form", "arr-reviewer-guidelines"],
     "rebuttal": ["arr-authors", "arr-reviewer-guidelines"],
+    "revision": ["arr-authors"],
     "camera-ready": ["arr-authors", "aclpub-final-version", "aclpub-formatting", "acl-formatting"]
   }
 }

@@ -53,6 +53,8 @@ Proofreading reports · citations verified against full text · ACL Anthology & 
 
 `init` asks which Python environment to use (existing venv, conda, a new `uv` env, or a path), checks `pdftotext`, and creates the project files. It installs nothing without asking.
 
+**Updating:** in Claude Code run `/plugin`, open **Marketplaces**, select `acl-paper-skills` and choose **Update marketplace**; it refreshes the listing and updates the plugin. From a shell: `claude plugin marketplace update acl-paper-skills`, then `claude plugin update acl-paper@acl-paper-skills`. Running sessions keep the old version until you run `/reload-plugins`; new sessions load the new one. `claude plugin list` shows the installed version. Auto-update is off by default for GitHub marketplaces; turn it on under **Marketplaces** → **Enable auto-update**.
+
 **Requirements:** Claude Code · Python ≥ 3.10 · `pdftotext` (poppler: `brew install poppler` / `apt install poppler-utils`) · a paper based on [acl-org/acl-style-files](https://github.com/acl-org/acl-style-files).
 
 ## 🧭 Workflow
@@ -79,6 +81,7 @@ flowchart LR
 | `/acl-paper:proofread [file\|section]` | Full review into `report.md`. `/acl-paper:proofread apply R3 R7` applies items. |
 | `/acl-paper:reviewer [persona]` | Simulated ARR review on the current official form → `review.md` + report items. |
 | `/acl-paper:rebuttal [limit]` | Triage the reviews in `reviews/`, check each point against the paper, draft `rebuttal.md`. |
+| `/acl-paper:revision [previous.pdf]` | Compare the previous version (PDF) with your current LaTeX and write the revision notes as Markdown or a LaTeX PDF. |
 | `/acl-paper:camera-ready [venue]` | Check and prepare the final version against ARR, ACL and ACLPUB guides. |
 | `/acl-paper:new-source [name]` | Add another literature source (Semantic Scholar, ACM, OpenReview, ...) to this project. |
 
@@ -101,7 +104,8 @@ my-paper/
 ├── paper.config.json       # env, main file, bib, English variant, sources
 ├── CLAUDE.md               # purpose, literature rules, YOUR style rules
 ├── report.md               # findings: 🔴 high · 🟠 medium · 🟢 low
-├── reviews/                # (rebuttal) pasted reviews
+├── reviews/                # (rebuttal, revision) pasted reviews
+├── revision/               # (revision) previous.pdf, previous.txt, revision.md or .tex
 └── literature/
     ├── pdf/<key>.pdf
     ├── md/<key>.md         # pdftotext -layout
@@ -128,7 +132,7 @@ flowchart LR
 
 ## 📋 Fresh guidelines, never copies
 
-ARR and ACL rules change every cycle, so this repo stores only **where** they live ([`guideline_sources.json`](scripts/paperkit/data/guideline_sources.json)). Each run of `guidelines-check`, `reviewer`, `rebuttal` and `camera-ready` downloads them from:
+ARR and ACL rules change every cycle, so this repo stores only **where** they live ([`guideline_sources.json`](scripts/paperkit/data/guideline_sources.json)). Each run of `guidelines-check`, `reviewer`, `rebuttal`, `revision` and `camera-ready` downloads them from:
 
 - [acl-org/aclrollingreview](https://github.com/acl-org/aclrollingreview): CFP, author checklist, Responsible NLP checklist, author guide, review form, reviewer guidelines
 - [acl-org/acl-style-files](https://github.com/acl-org/acl-style-files): formatting guidelines

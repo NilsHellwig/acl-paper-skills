@@ -1,0 +1,115 @@
+% Revision notes: what changed between the previous and the current version of the paper.
+% Compile with: latexmk -pdf revision.tex   (or pdflatex; no ACL style files needed)
+%
+% The layout is fixed here. Fill in the three \newcommand lines below and write
+% the body with these macros only. Escape \ & % $ # _ { } ~ ^ in text.
+%
+%   \revsummary{text}                      short overview, shown in a highlighted box
+%   \revoverview                           opens the overview table; rows follow:
+%     \revrow{Section}{count}{types}         one row per section
+%     \revoverviewend                      closes the table
+%   \begin{revsection}{Section title}      one colored box per paper section
+%     \revchange{type}{what changed}{where}   type: added | changed | removed | moved
+%   \end{revsection}
+%   \revpoint{R1.2}{reviewer's point, short quote}{our response and change}{where}
+%                                          a card for one review point; use inside
+%                                          or outside a revsection
+%   \revnote{text}                         a plain remark (open questions, limits)
+
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[margin=2.3cm,top=2.8cm]{geometry}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+
+\tcbuselibrary{skins,breakable}
+
+% ---- fill in -------------------------------------------------------------
+\newcommand{\PaperTitle}{Title of the paper}
+\newcommand{\RevisionDate}{\today}
+\newcommand{\RevisionSubtitle}{Revision notes}
+% --------------------------------------------------------------------------
+
+\definecolor{revaccent}{HTML}{2B3A55}
+\definecolor{revgray}{HTML}{6B7280}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\renewcommand{\arraystretch}{1.25}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.3pt}
+\lhead{\small\color{revgray}\PaperTitle}
+\rhead{\small\color{revgray}\RevisionSubtitle}
+\cfoot{\small\color{revgray}\thepage}
+
+\titleformat{\section}{\large\bfseries\color{revaccent}}{}{0pt}{}[\vspace{-0.6em}\rule{\linewidth}{0.3pt}]
+\titlespacing*{\section}{0pt}{1.4em}{0.6em}
+
+% Type of a change as a small-caps word.
+\newcommand{\revbadge}[1]{\textsc{\color{revaccent}\bfseries #1}}
+
+\newcommand{\revchange}[3]{%
+  \par\noindent\hangindent=2.3cm\hangafter=1
+  \makebox[2.3cm][l]{\revbadge{#1}}#2~\textcolor{revgray}{\small(#3)}\par\vspace{0.2em}}
+
+\newcommand{\revnote}[1]{\par\noindent\textcolor{revgray}{\itshape #1}\par}
+
+\newtcolorbox{revsection}[1]{%
+  enhanced,breakable,colback=white,colframe=white,
+  boxrule=0pt,arc=0pt,left=0pt,right=0pt,top=2pt,bottom=2pt,
+  borderline west={1.2pt}{0pt}{revaccent},leftrule=0pt,
+  title={#1},coltitle=revaccent,colbacktitle=white,fonttitle=\bfseries\large,
+  attach title to upper={\par\smallskip},
+  before skip=10pt,after skip=8pt,left=10pt}
+
+\newcommand{\revpoint}[4]{%
+  \begin{tcolorbox}[enhanced,breakable,colback=white,colframe=white,boxrule=0pt,arc=0pt,
+    left=10pt,right=0pt,top=3pt,bottom=3pt,
+    borderline west={0.8pt}{0pt}{revgray},before skip=6pt,after skip=6pt]
+    {\small\bfseries\color{revaccent}#1}\hfill{\small\color{revgray}#4}\par
+    {\small\color{revgray}\textit{``#2''}}\par\smallskip
+    #3
+  \end{tcolorbox}}
+
+\newcommand{\revsummary}[1]{#1\par}
+
+\newcommand{\revoverview}{%
+  \par\vspace{0.2em}\noindent
+  \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}p{0.5\linewidth}rl@{}}
+  \toprule
+  \textbf{Section} & \textbf{Changes} & \textbf{Types}\\
+  \midrule}
+\newcommand{\revrow}[3]{#1 & #2 & #3\\}
+\newcommand{\revoverviewend}{\bottomrule\end{tabular*}\par}
+
+\begin{document}
+
+{\color{revgray}\small\textsc{\RevisionSubtitle}\hfill\RevisionDate}\par\medskip
+{\LARGE\bfseries\color{revaccent}\PaperTitle}\par
+\rule{\linewidth}{0.8pt}
+
+\revsummary{Overview of this revision.}
+
+\section*{Overview}
+\revoverview
+\revrow{Introduction}{2}{changed, added}
+\revoverviewend
+
+\section*{Changes}
+\begin{revsection}{Introduction}
+\revchange{added}{A new paragraph on the contribution.}{Sec.~1, l.~40}
+\revchange{changed}{Reworded the motivation.}{Sec.~1, l.~12}
+\end{revsection}
+
+\end{document}

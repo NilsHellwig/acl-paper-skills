@@ -6,6 +6,7 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ### Added
 
+- Skill `revision`: asks for the reviews and the previous version as PDF, compares it with the current LaTeX and writes the revision notes as Markdown or as a LaTeX-built PDF. New `paperkit.py` commands `revision-prepare`, `revision-diff` and `latex-check`, the template `templates/revision.tex` and the guideline set `revision`.
 - `paperkit.py detect-english`: counts American and British spellings in the paper; `init` recommends the majority variant and shows the counts.
 - `init` asks whether to keep literature PDFs and texts (or the whole `literature/` folder) out of git and writes the `.gitignore` entries (`paperkit.py init --gitignore`).
 - More US/UK spelling pairs (summarization, realize, utilized, gray, ...).
