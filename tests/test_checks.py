@@ -50,3 +50,20 @@ def test_scope_limits_findings(project):
     only = [root / "sections" / "method.tex"]
     assert all(f.file == "sections/method.tex" for f in checks.run(root, cfg, only)
                if f.check != "missing-limitations")
+
+
+def test_english_detection_recommends_majority(project):
+    root, cfg = project
+    (root / "sections" / "method.tex").write_text(
+        "We analyse the modelling, the behaviour and the colour of tokenisation. We analyze it.\n")
+    usage = checks.english_usage(root, root / cfg["main_tex"])
+    assert usage["recommendation"] == "uk"
+    assert (usage["us_count"], usage["uk_count"]) == (1, 5)
+    assert "83%" in usage["reason"]
+
+
+def test_english_detection_defaults_to_us_without_evidence(project):
+    root, cfg = project
+    (root / "sections" / "method.tex").write_text("Plain text.\n")
+    usage = checks.english_usage(root, root / cfg["main_tex"])
+    assert usage["recommendation"] == "us" and usage["us_count"] == usage["uk_count"] == 0

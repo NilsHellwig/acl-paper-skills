@@ -5,6 +5,7 @@ Run it with any python3. Commands that need a source adapter (search, add,
 anthology-update) re-run themselves under the interpreter set in
 paper.config.json, where the adapter packages are installed.
 
+    paperkit.py detect-english --main-tex FILE           (US vs UK spelling in the text)
     paperkit.py init --python PATH --main-tex FILE [--english us|uk]
     paperkit.py doctor
     paperkit.py search SOURCE QUERY [--limit N] [--year-from Y] [--year-to Y]
@@ -100,6 +101,14 @@ def cmd_init(a) -> None:
         created.append(bib_rel)
     literature.build_index(root, cfg, set())
     print(json.dumps({"root": str(root), "config": cfg, "written": created}, indent=2))
+
+
+def cmd_detect_english(a) -> None:
+    root = Path.cwd().resolve()
+    main = (root / a.main_tex).resolve()
+    if not main.is_file():
+        die(f"⚠️ {a.main_tex} does not exist.")
+    print(json.dumps(checks.english_usage(root, main), indent=2))
 
 
 def cmd_doctor(a) -> None:
@@ -328,6 +337,8 @@ def main(argv: list[str]) -> None:
     s.add_argument("--python", required=True)
     s.add_argument("--main-tex", required=True)
     s.add_argument("--english", choices=["us", "uk"], default="us")
+    s = sub.add_parser("detect-english")
+    s.add_argument("--main-tex", required=True)
     sub.add_parser("doctor")
     s = sub.add_parser("search")
     s.add_argument("source")

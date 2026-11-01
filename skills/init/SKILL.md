@@ -31,7 +31,9 @@ Resolve the choice to the interpreter's absolute path (`<env>/bin/python`) and c
 
 ## 4. Packages
 
-Run `PK init --python <python> --main-tex <main.tex>` (add `--english uk` if the user writes British English; ask). It writes `paper.config.json`, `literature/{pdf,md,notes}/`, `literature/archive.bib`, `literature/index.md` and `report.md`, keeping what exists.
+First settle the English variant. Run `PK detect-english --main-tex <main.tex>`: it counts American and British spellings in the existing text and returns a recommendation with its reason. Ask with AskUserQuestion, putting the recommended variant first with "(Recommended)" and the counts in its description (e.g. "British: 14 of 16 variant spellings, such as analyse, modelling"). Name mixed usage when both counts are above zero, since `proofread` will then flag the minority spellings.
+
+Then run `PK init --python <python> --main-tex <main.tex> --english <us|uk>`. It writes `paper.config.json`, `literature/{pdf,md,notes}/`, `literature/archive.bib`, `literature/index.md` and `report.md`, keeping what exists.
 
 Then run `PK doctor`. For each source with missing packages it prints the exact install command. Show it and ask before running it. (`acl-anthology` needs `typing_extensions` alongside; the command already lists it.)
 

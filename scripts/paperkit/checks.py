@@ -60,6 +60,33 @@ def _words(name: str) -> list[str]:
     ]
 
 
+def english_usage(root: Path, main: Path) -> dict:
+    """Count US vs UK spelling variants in the paper body and recommend one."""
+    pairs = [l.split("\t") for l in _words("spelling_variants.txt")]
+    variant = {w: kind for us, uk in pairs for w, kind in ((us, "us"), (uk, "uk"))}
+    rx = re.compile(r"\b(" + "|".join(map(re.escape, variant)) + r")\b", re.I)
+    counts = {"us": {}, "uk": {}}
+    for _, _, line in _body_lines(tex.ordered_files(root, main)):
+        for m in rx.finditer(prose(line)):
+            word = m.group(0).lower()
+            kind = counts[variant[word]]
+            kind[word] = kind.get(word, 0) + 1
+    us, uk = sum(counts["us"].values()), sum(counts["uk"].values())
+    if us == uk == 0:
+        rec, why = "us", "No spelling variants in the text yet; American English as the default."
+    elif us == uk:
+        rec, why = "us", f"Tie ({us} American, {uk} British); American English as the default."
+    else:
+        rec = "us" if us > uk else "uk"
+        share = round(100 * max(us, uk) / (us + uk))
+        why = (f"{share}% of the variant spellings are "
+               f"{'American' if rec == 'us' else 'British'} ({us} American, {uk} British).")
+        if us + uk < 5:
+            why += " Few variant words so far, so this is a weak signal."
+    return {"recommendation": rec, "reason": why, "us_count": us, "uk_count": uk,
+            "us_words": counts["us"], "uk_words": counts["uk"]}
+
+
 def _rel(root: Path, path: Path) -> str:
     try:
         return str(path.relative_to(root.resolve()))

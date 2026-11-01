@@ -36,3 +36,17 @@ tokenized	tokenised
 tokenizer	tokeniser
 utilize	utilise
 visualization	visualisation
+emphasized	emphasised
+generalized	generalised
+gray	grey
+lemmatization	lemmatisation
+organized	organised
+prioritize	prioritise
+realize	realise
+realized	realised
+recognized	recognised
+specialized	specialised
+standardized	standardised
+summarization	summarisation
+utilized	utilised
+utilizing	utilising

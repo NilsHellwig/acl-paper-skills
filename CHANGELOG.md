@@ -4,6 +4,11 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+### Added
+
+- `paperkit.py detect-english`: counts American and British spellings in the paper; `init` recommends the majority variant and shows the counts.
+- More US/UK spelling pairs (summarization, realize, utilized, gray, ...).
+
 ## [0.1.0] - 2026-11-01
 
 ### Added
