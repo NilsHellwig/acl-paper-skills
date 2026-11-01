@@ -6,7 +6,7 @@ anthology-update) re-run themselves under the interpreter set in
 paper.config.json, where the adapter packages are installed.
 
     paperkit.py detect-english --main-tex FILE           (US vs UK spelling in the text)
-    paperkit.py init --python PATH --main-tex FILE [--english us|uk]
+    paperkit.py init --python PATH --main-tex FILE [--english us|uk] [--gitignore none|files|all]
     paperkit.py doctor
     paperkit.py search SOURCE QUERY [--limit N] [--year-from Y] [--year-to Y]
     paperkit.py add SOURCE ID [--key KEY]
@@ -100,7 +100,29 @@ def cmd_init(a) -> None:
         (root / bib_rel).write_text("", encoding="utf-8")
         created.append(bib_rel)
     literature.build_index(root, cfg, set())
+    if a.gitignore != "none" and _gitignore_literature(root, cfg, a.gitignore):
+        created.append(".gitignore")
     print(json.dumps({"root": str(root), "config": cfg, "written": created}, indent=2))
+
+
+GITIGNORE_MARK = "# acl-paper: literature"
+
+
+def _gitignore_literature(root: Path, cfg: dict, mode: str) -> bool:
+    """Add the literature block to .gitignore unless it is already there."""
+    path = root / ".gitignore"
+    text = path.read_text(encoding="utf-8") if path.exists() else ""
+    if GITIGNORE_MARK in text:
+        return False
+    lit = cfg["literature_dir"].rstrip("/")
+    entries = {
+        "files": [f"/{lit}/pdf/", f"/{lit}/md/"],
+        "all": [f"/{lit}/"],
+    }[mode]
+    block = "\n".join([GITIGNORE_MARK, *entries]) + "\n"
+    path.write_text(text + ("\n" if text and not text.endswith("\n\n") else "") + block,
+                    encoding="utf-8")
+    return True
 
 
 def cmd_detect_english(a) -> None:
@@ -337,6 +359,8 @@ def main(argv: list[str]) -> None:
     s.add_argument("--python", required=True)
     s.add_argument("--main-tex", required=True)
     s.add_argument("--english", choices=["us", "uk"], default="us")
+    s.add_argument("--gitignore", choices=["none", "files", "all"], default="none",
+                   help="files: ignore literature PDFs and texts; all: the whole folder")
     s = sub.add_parser("detect-english")
     s.add_argument("--main-tex", required=True)
     sub.add_parser("doctor")

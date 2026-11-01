@@ -113,3 +113,22 @@ def test_hook_silent_outside_projects(tmp_path):
 def test_commands_without_project_fail_clearly(tmp_path):
     r = run(["sync"], tmp_path)
     assert r.returncode == 1 and "/acl-paper:init" in r.stderr
+
+
+def test_init_gitignore_modes(tmp_path):
+    (tmp_path / "main.tex").write_text("\\documentclass{article}\\usepackage{acl}\n\\bibliography{refs}\n")
+    (tmp_path / ".gitignore").write_text("*.aux")
+    args = PK + ["init", "--python", sys.executable, "--main-tex", "main.tex"]
+    subprocess.run(args + ["--gitignore", "files"], cwd=tmp_path, check=True, capture_output=True)
+    subprocess.run(args + ["--gitignore", "files"], cwd=tmp_path, check=True, capture_output=True)
+    text = (tmp_path / ".gitignore").read_text()
+    assert text.startswith("*.aux\n")
+    assert text.count("# acl-paper: literature") == 1
+    assert "/literature/pdf/" in text and "/literature/md/" in text and "/literature/\n" not in text
+
+    other = tmp_path / "other"
+    other.mkdir()
+    (other / "main.tex").write_text((tmp_path / "main.tex").read_text())
+    subprocess.run(args + ["--gitignore", "all"], cwd=other, check=True, capture_output=True)
+    assert (other / ".gitignore").read_text() == "# acl-paper: literature\n/literature/\n"
+    subprocess.run(args, cwd=tmp_path / "other", check=True, capture_output=True)

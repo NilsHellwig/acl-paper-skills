@@ -33,7 +33,13 @@ Resolve the choice to the interpreter's absolute path (`<env>/bin/python`) and c
 
 First settle the English variant. Run `PK detect-english --main-tex <main.tex>`: it counts American and British spellings in the existing text and returns a recommendation with its reason. Ask with AskUserQuestion, putting the recommended variant first with "(Recommended)" and the counts in its description (e.g. "British: 14 of 16 variant spellings, such as analyse, modelling"). Name mixed usage when both counts are above zero, since `proofread` will then flag the minority spellings.
 
-Then run `PK init --python <python> --main-tex <main.tex> --english <us|uk>`. It writes `paper.config.json`, `literature/{pdf,md,notes}/`, `literature/archive.bib`, `literature/index.md` and `report.md`, keeping what exists.
+Also ask, in the same AskUserQuestion round, whether the literature goes into git (check `git rev-parse --is-inside-work-tree`; outside a repo, still ask, since the project may become one or sync to Overleaf):
+
+- `files` (Recommended): ignore `literature/pdf/` and `literature/md/`. Publishers' PDFs are often not redistributable and make the repo large; notes, index and `archive.bib` stay versioned, and `PK add` can re-fetch the papers.
+- `all`: ignore the whole `literature/` folder, notes and archive included.
+- `none`: version everything, for private repos where co-authors should get the PDFs too.
+
+Then run `PK init --python <python> --main-tex <main.tex> --english <us|uk> --gitignore <files|all|none>`. It writes `paper.config.json`, `literature/{pdf,md,notes}/`, `literature/archive.bib`, `literature/index.md` and `report.md`, keeping what exists.
 
 Then run `PK doctor`. For each source with missing packages it prints the exact install command. Show it and ask before running it. (`acl-anthology` needs `typing_extensions` alongside; the command already lists it.)
 
