@@ -39,7 +39,13 @@ Also ask, in the same AskUserQuestion round, whether the literature goes into gi
 - `all`: ignore the whole `literature/` folder, notes and archive included.
 - `none`: version everything, for private repos where co-authors should get the PDFs too.
 
-Then run `PK init --python <python> --main-tex <main.tex> --english <us|uk> --gitignore <files|all|none>`. It writes `paper.config.json`, `literature/{pdf,md,notes}/`, `literature/archive.bib`, `literature/index.md` and `report.md`, keeping what exists.
+Also ask, in the same round, what the paper is submitted to; `guidelines-check`, `camera-ready`, `reviewer`, `rebuttal`, `revision` and `proofread` branch on it:
+
+- `venue`: `acl-arr` (ACL, EMNLP, NAACL, ... via ARR) or `semeval` (a SemEval shared task; its rules and submission differ from ARR).
+- `paper_type`: `long` or `short` for `acl-arr`; `semeval-system` or `semeval-task` for `semeval`.
+- `stage`: `review` (the version for peer review) or `camera-ready` (accepted, final version). The `acl{...}` option in the main file hints at it.
+
+Then run `PK init --python <python> --main-tex <main.tex> --english <us|uk> --gitignore <files|all|none> --venue <venue> --paper-type <type> --stage <stage>`. It writes `paper.config.json` (including `venue`, `paper_type`, `stage`), `literature/{pdf,md,notes}/`, `literature/archive.bib`, `literature/index.md` and `report.md`, keeping what exists.
 
 Then run `PK doctor`. For each source with missing packages it prints the exact install command. Show it and ask before running it. (`acl-anthology` needs `typing_extensions` alongside; the command already lists it.)
 

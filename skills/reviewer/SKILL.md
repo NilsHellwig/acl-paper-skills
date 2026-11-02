@@ -5,6 +5,8 @@ disable-model-invocation: true
 argument-hint: "[reviewer persona or focus, e.g. 'skeptical about the evaluation']"
 ---
 
+This skill is ARR-only. When `paper.config.json` has `venue` `semeval`, say that SemEval has no ARR review form and stop.
+
 Review the paper as an ARR reviewer would, so the authors see the weaknesses before real reviewers do. The review form and reviewer guidelines change between cycles; every run fetches them.
 
 `PK` means `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/paperkit.py`, run from the project root.
@@ -38,10 +40,10 @@ Apply the persona or focus from the argument if one was given; otherwise review 
 
 ## 5. Write review.md
 
-Fill every field of the fetched form in `review.md` in the project root, in the form's order and with its field names: summaries, strengths, weaknesses, comments, every score with a one-line justification using the scale's own wording. Each weakness names the place in the paper and what would fix it. Overwrite an earlier `review.md` only after asking; otherwise number it (`review-2.md`).
+Fill every field of the fetched form in `review.md` in the project root, in the form's order and with its field names: summaries, strengths, weaknesses, comments, every score with a one-line justification using the scale's own wording. Each weakness names the place in the paper and what would fix it. Where a weakness rests on a reviewer guideline or a form criterion, name its identifier and the document's URL as `PK guidelines` prints it. Overwrite an earlier `review.md` only after asking; otherwise number it (`review-2.md`).
 
 ## 6. Report items
 
-Each weakness that the authors can fix before submission becomes an item in `report.md`, category `Review`, severity by how much it would move the score. Weaknesses that need new experiments are 🔴 or 🟠 with the experiment named.
+Each weakness that the authors can fix before submission becomes an item in `report.md`, category `Review`, severity by how much it would move the score, with **Rule:** where the weakness rests on a guideline. Weaknesses that need new experiments are 🔴 or 🟠 with the experiment named.
 
 Report in chat: the overall assessment with its score, the three weaknesses most likely to sink the paper, and what fixes them.

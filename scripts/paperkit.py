@@ -7,6 +7,8 @@ paper.config.json, where the adapter packages are installed.
 
     paperkit.py detect-english --main-tex FILE           (US vs UK spelling in the text)
     paperkit.py init --python PATH --main-tex FILE [--english us|uk] [--gitignore none|files|all]
+                       [--venue V] [--paper-type T] [--stage S]
+    paperkit.py config-set [--venue V] [--paper-type T] [--stage S]   (acl-arr|semeval; long|short|semeval-system|semeval-task; review|camera-ready)
     paperkit.py doctor
     paperkit.py search SOURCE QUERY [--limit N] [--year-from Y] [--year-to Y]
     paperkit.py add SOURCE ID [--key KEY]
@@ -88,6 +90,7 @@ def cmd_init(a) -> None:
     cfg = config.load(root) if cfg_path.exists() else dict(config.DEFAULTS)
     cfg.update(python=a.python, main_tex=os.path.relpath(main, root), bib=bib_rel,
                english=a.english)
+    cfg.update(_submission_fields(a))
     config.save(root, cfg)
 
     literature.ensure_layout(root, cfg)
@@ -107,6 +110,21 @@ def cmd_init(a) -> None:
     if a.gitignore != "none" and _gitignore_literature(root, cfg, a.gitignore):
         created.append(".gitignore")
     print(json.dumps({"root": str(root), "config": cfg, "written": created}, indent=2))
+
+
+def _submission_fields(a) -> dict:
+    fields = {"venue": a.venue, "paper_type": a.paper_type, "stage": a.stage}
+    return {k: v for k, v in fields.items() if v}
+
+
+def cmd_config_set(a) -> None:
+    root, cfg = ctx()
+    fields = _submission_fields(a)
+    if not fields:
+        die("⚠️ Pass at least one of --venue, --paper-type, --stage.")
+    cfg.update(fields)
+    config.save(root, cfg)
+    print(json.dumps({k: cfg[k] for k in ("venue", "paper_type", "stage")}))
 
 
 GITIGNORE_MARK = "# acl-paper: literature"
@@ -316,8 +334,9 @@ def cmd_check(a) -> None:
 
 def cmd_guidelines(a) -> None:
     fetched, failed = guidelines.fetch(a.names, Path(a.out) if a.out else None)
+    urls = guidelines.catalog()["documents"]
     for name, path in fetched.items():
-        print(f"✅ {name}: {path}")
+        print(f"✅ {name}: {guidelines.page_url(urls[name])} -> {path}")
     for name, why in failed.items():
         print(f"⚠️ {name}: {why}")
     if failed:
@@ -428,6 +447,10 @@ def main(argv: list[str]) -> None:
     s.add_argument("--english", choices=["us", "uk"], default="us")
     s.add_argument("--gitignore", choices=["none", "files", "all"], default="none",
                    help="files: ignore literature PDFs and texts; all: the whole folder")
+    for s in (s, sub.add_parser("config-set")):
+        s.add_argument("--venue", choices=config.VENUES)
+        s.add_argument("--paper-type", choices=config.PAPER_TYPES)
+        s.add_argument("--stage", choices=config.STAGES)
     s = sub.add_parser("detect-english")
     s.add_argument("--main-tex", required=True)
     sub.add_parser("doctor")

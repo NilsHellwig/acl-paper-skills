@@ -1,8 +1,9 @@
-"""Fetch ARR / ACL / ACLPUB documents fresh from GitHub into a temp folder."""
+"""Fetch ARR / ACL / ACLPUB / SemEval documents fresh from GitHub into a temp folder."""
 
 from __future__ import annotations
 
 import json
+import re
 import tempfile
 import urllib.error
 import urllib.request
@@ -15,6 +16,12 @@ USER_AGENT = "acl-paper-plugin (https://github.com/NilsHellwig/acl-paper-skills)
 
 def catalog() -> dict:
     return json.loads(SOURCES.read_text(encoding="utf-8"))
+
+
+def page_url(raw_url: str) -> str:
+    """The readable GitHub page of a raw.githubusercontent.com URL (other URLs unchanged)."""
+    m = re.match(r"https://raw\.githubusercontent\.com/([^/]+)/([^/]+)/([^/]+)/(.+)$", raw_url)
+    return f"https://github.com/{m[1]}/{m[2]}/blob/{m[3]}/{m[4]}" if m else raw_url
 
 
 def fetch(names: list[str], out: Path | None = None) -> tuple[dict[str, Path], dict[str, str]]:

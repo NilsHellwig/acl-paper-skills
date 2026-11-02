@@ -6,6 +6,8 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ### Added
 
+- SemEval support: `venue` (`acl-arr` or `semeval`), `paper_type` (`long`, `short`, `semeval-system`, `semeval-task`) and `stage` (`review`, `camera-ready`) in `paper.config.json`, asked by `init` and settable with `paperkit.py config-set`. New documents `semeval-paper-requirements` and `semeval-system-paper-template` and the sets `guidelines-check-semeval` and `camera-ready-semeval`, fetched fresh from the SemEval repo. `guidelines-check` and `camera-ready` branch on the venue; `reviewer`, `rebuttal` and `revision` stop for SemEval.
+- Rule references: `paperkit.py guidelines` prints each document's GitHub page URL; `guidelines-check`, `camera-ready`, `reviewer` and `rebuttal` cite rules and review issues (e.g. `H9`) with identifier and URL; `report.md` items get an optional **Rule:** field.
 - Skill `revision`: asks for the reviews and the previous version as PDF, compares it with the current LaTeX and writes the revision notes as Markdown or as a LaTeX-built PDF. New `paperkit.py` commands `revision-prepare`, `revision-diff` and `latex-check`, the template `templates/revision.tex` and the guideline set `revision`.
 - `paperkit.py detect-english`: counts American and British spellings in the paper; `init` recommends the majority variant and shows the counts.
 - `init` asks whether to keep literature PDFs and texts (or the whole `literature/` folder) out of git and writes the `.gitignore` entries (`paperkit.py init --gitignore`).
