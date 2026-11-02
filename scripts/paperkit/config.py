@@ -13,6 +13,9 @@ DEFAULTS = {
     "main_tex": None,
     "bib": None,
     "english": "us",
+    "venue": None,
+    "paper_type": None,
+    "stage": None,
     "key_scheme": "native",
     "literature_dir": "literature",
     "report": "report.md",
@@ -22,6 +25,11 @@ DEFAULTS = {
         "US", "UK", "EU", "USA", "II", "III", "IV", "VI", "OK",
     ],
 }
+
+
+VENUES = ("acl-arr", "semeval")
+PAPER_TYPES = ("long", "short", "semeval-system", "semeval-task")
+STAGES = ("review", "camera-ready")
 
 
 class ConfigError(RuntimeError):

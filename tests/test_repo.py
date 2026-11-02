@@ -50,4 +50,4 @@ def test_guideline_sets_reference_known_documents():
     for name, docs in cat["sets"].items():
         assert set(docs) <= set(cat["documents"]), name
     skills = {p.parent.name for p in (ROOT / "skills").glob("*/SKILL.md")}
-    assert set(cat["sets"]) <= skills
+    assert {n.removesuffix("-semeval") for n in cat["sets"]} <= skills

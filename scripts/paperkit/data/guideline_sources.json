@@ -1,5 +1,5 @@
 {
-  "_comment": "Upstream documents fetched fresh on every use and never stored in this repo or the paper project. A 404 means upstream moved a file: open a 'Guideline drift' issue.",
+  "_comment": "Upstream documents fetched fresh on every use and never stored in this repo or the paper project. A 404 means upstream moved a file: open a 'Guideline drift' issue. A set named '<skill>-semeval' is the SemEval variant of that skill's set.",
   "documents": {
     "arr-cfp": "https://raw.githubusercontent.com/acl-org/aclrollingreview/main/cfp.md",
     "arr-author-checklist": "https://raw.githubusercontent.com/acl-org/aclrollingreview/main/authorchecklist.md",
@@ -9,13 +9,45 @@
     "arr-reviewer-guidelines": "https://raw.githubusercontent.com/acl-org/aclrollingreview/main/reviewerguidelines.md",
     "acl-formatting": "https://raw.githubusercontent.com/acl-org/acl-style-files/master/formatting.md",
     "aclpub-final-version": "https://raw.githubusercontent.com/acl-org/ACLPUB/master/docs/final-version.md",
-    "aclpub-formatting": "https://raw.githubusercontent.com/acl-org/ACLPUB/master/docs/formatting.md"
+    "aclpub-formatting": "https://raw.githubusercontent.com/acl-org/ACLPUB/master/docs/formatting.md",
+    "semeval-paper-requirements": "https://raw.githubusercontent.com/SemEval/semeval.github.io/master/paper-requirements.md",
+    "semeval-system-paper-template": "https://raw.githubusercontent.com/SemEval/semeval.github.io/master/system-paper-template.md"
   },
   "sets": {
-    "guidelines-check": ["arr-cfp", "arr-author-checklist", "arr-responsible-nlp", "acl-formatting"],
-    "reviewer": ["arr-review-form", "arr-reviewer-guidelines"],
-    "rebuttal": ["arr-authors", "arr-reviewer-guidelines"],
-    "revision": ["arr-authors"],
-    "camera-ready": ["arr-authors", "aclpub-final-version", "aclpub-formatting", "acl-formatting"]
+    "guidelines-check": [
+      "arr-cfp",
+      "arr-author-checklist",
+      "arr-responsible-nlp",
+      "acl-formatting"
+    ],
+    "reviewer": [
+      "arr-review-form",
+      "arr-reviewer-guidelines"
+    ],
+    "rebuttal": [
+      "arr-authors",
+      "arr-reviewer-guidelines"
+    ],
+    "revision": [
+      "arr-authors"
+    ],
+    "camera-ready": [
+      "arr-authors",
+      "aclpub-final-version",
+      "aclpub-formatting",
+      "acl-formatting"
+    ],
+    "guidelines-check-semeval": [
+      "semeval-paper-requirements",
+      "semeval-system-paper-template",
+      "acl-formatting"
+    ],
+    "camera-ready-semeval": [
+      "semeval-paper-requirements",
+      "semeval-system-paper-template",
+      "aclpub-final-version",
+      "aclpub-formatting",
+      "acl-formatting"
+    ]
   }
 }

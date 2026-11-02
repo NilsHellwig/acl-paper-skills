@@ -25,7 +25,7 @@ Two branches by argument:
    - **Language**: spelling, grammar, articles, agreement, the English variant from `paper.config.json`.
    - **AI-Style**: the patterns of the `writing` skill.
    - **Consistency**: terminology, abbreviations, notation, capitalization, tense, numbers.
-   - **ACL-Compliance**: only what is visible while reading (e.g. no Limitations section, author names in a review version). The full check is `/acl-paper:guidelines-check`.
+   - **ACL-Compliance**: only what is visible while reading (e.g. no Limitations section; author names in a review version of an `acl-arr` paper, but not for `venue` `semeval`, where papers are not anonymous; check `paper.config.json`). The full check is `/acl-paper:guidelines-check`.
    Where a finding depends on intent you cannot read from the text (is this term deliberately different? is this the claimed contribution?), collect the questions and ask them with AskUserQuestion in one round before writing the items.
 5. **Confirm the script candidates** in context. Drop false positives (an abbreviation that is a model name, a quote inside `\texttt`). Several identical low findings become one item listing all places.
 6. **Write the items** into `report.md` in the format its header comment defines, under the severity heading, with new IDs counting up from the highest used. Each item quotes the text and proposes a concrete fix.

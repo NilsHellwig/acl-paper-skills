@@ -12,6 +12,7 @@ Item format:
 - **Text:** "LLMs outperform fine-tuned models on all ABSA tasks"
 - **Issue:** The cited paper only reports this for two of five tasks (Tab. 3).
 - **Suggestion:** Narrow the claim to ASTE and ASQP, or cite a source covering all tasks.
+- **Rule:** (only when the item rests on an upstream rule or review issue) identifier and URL of the document, e.g. `H9`, https://github.com/acl-org/aclrollingreview/blob/main/reviewerguidelines.md
 
 Severity: 🔴 high (blocks submission or misstates something), 🟠 medium (a reviewer
 would flag it), 🟢 low (polish).

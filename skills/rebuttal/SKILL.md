@@ -5,6 +5,8 @@ disable-model-invocation: true
 argument-hint: "[word or character limit, if known]"
 ---
 
+This skill is ARR-only. When `paper.config.json` has `venue` `semeval`, say that SemEval has no ARR response process and stop.
+
 Help the authors answer their reviews. The authors decide what to concede, what to argue and what to promise; this skill organizes the reviews, checks each point against the paper and drafts the answers.
 
 `PK` means `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/paperkit.py`, run from the project root.
@@ -19,7 +21,7 @@ Help the authors answer their reviews. The authors decide what to concede, what 
 
 Split every review into atomic points. For each point record: reviewer, quote, type (misunderstanding, missing experiment, missing related work, clarity, presentation, factual error by the reviewer, question), and what the paper actually says (section, line, quote).
 
-Check each point against the paper and, for related work, against the papers themselves (`literature` skill; fetch with the source skills when the reviewer names a paper). Mark points that the reviewer guidelines treat as unhelpful (e.g. "not novel" without a reference, demanding comparisons to work after the deadline) and point the user to the issue-reporting route the fetched guide describes.
+Check each point against the paper and, for related work, against the papers themselves (`literature` skill; fetch with the source skills when the reviewer names a paper). Mark points that the reviewer guidelines treat as unhelpful (e.g. "not novel" without a reference, demanding comparisons to work after the deadline) and point the user to the issue-reporting route the fetched guide describes. Name each such point with the issue code the fetched guide uses (e.g. `H9`) and the guide's URL as `PK guidelines` prints it, so the report to ARR can be pasted as is. The answers to the reviewers in `rebuttal.md` carry no such references.
 
 Show the triage to the user as a table. Then ask with AskUserQuestion, point by point for the important ones: concede, argue, or answer with new results, and which new results exist. Wait for the answers.
 

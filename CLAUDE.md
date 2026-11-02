@@ -15,6 +15,7 @@ Development guide for the acl-paper plugin itself. (Paper projects get their own
 - Skills are read by agents. Load the `writing-for-agents` skill (mattpocock-skills) before creating or editing one, if available.
 - `${CLAUDE_PLUGIN_ROOT}` and `${CLAUDE_SKILL_DIR}` are substituted in SKILL.md only. Reference files and templates copied into projects must not rely on them.
 - Upstream rules (ARR, ACL, ACLPUB) are fetched, never restated: a skill names the document set for `paperkit.py guidelines`, and states facts about the rules only as "check X in the fetched document".
+- Skills that report on upstream rules or review issues tell the agent to cite identifier and document URL (printed by `paperkit.py guidelines`); URLs are never written into skills.
 - Every rule lives in one place. Literature handling is in `skills/literature`, prose rules in `skills/writing`; other skills point there.
 
 ## Code

@@ -5,6 +5,8 @@ disable-model-invocation: true
 argument-hint: "[path to the previous version's PDF]"
 ---
 
+This skill is ARR-only. When `paper.config.json` has `venue` `semeval`, say that SemEval has no ARR resubmission and stop.
+
 Explain to reviewers and editors what changed since the previous version. The previous version is a PDF, the current one the LaTeX sources; a script aligns the two, you judge what the differences mean, and the authors settle what stays unclear. The notes state only changes the comparison shows.
 
 `PK` means `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/paperkit.py`, run from the project root.
@@ -28,7 +30,7 @@ It stores `revision/previous.pdf` and its text `revision/previous.txt`. On ⚠�
 
 ## 3. Rules and format
 
-- `PK guidelines revision` fetches the ARR author guide. On ⚠️ say which rules are missing. Read the parts on resubmission and revision notes in full: what the notes must contain, where they are submitted, length limits. A limit the user gives wins.
+- `PK guidelines revision` fetches the ARR author guide. On ⚠️ say which rules are missing. When you report to the user which rules apply, name them with their section heading and the guide's URL as `PK guidelines` prints it; the notes themselves carry none. Read the parts on resubmission and revision notes in full: what the notes must contain, where they are submitted, length limits. A limit the user gives wins.
 - Ask with AskUserQuestion: Markdown (`revision/revision.md`, recommended) or LaTeX (`revision/revision.tex`, built to `revision.pdf`). Ask again on every run.
 - LaTeX: run `PK latex-check`. On ⚠️ show what is missing and the install hint it prints, then ask: write only the `.tex` without building (recommended, it compiles in Overleaf), switch to Markdown, or stop so the user can install LaTeX first. Copy `${CLAUDE_PLUGIN_ROOT}/templates/revision.tex` to `revision/revision.tex`; its header comment lists the macros. Fill in the title lines and body, leave the layout alone.
 
